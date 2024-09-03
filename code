@@ -1,0 +1,74 @@
+ int pinApi = A1;
+const int buzzerpin = 12;
+const int redLED = 5;
+const int greenLED=6;
+const int smokeA0 = A0;
+const int relayPin = 8;
+// inialisasi variabel data
+
+int dataAsap;
+//Nilai threshold
+int sensorThres = 300;
+int firevalue=0 ;
+void setup()
+{
+ // inialisasi status I/O pin
+ pinMode(pinApi, INPUT); // pin sebagai input
+ pinMode(smokeA0, INPUT); // pin sebagai input
+ pinMode(buzzerpin, OUTPUT); // pin sebagai output
+ pinMode(redLED, OUTPUT);
+ pinMode(greenLED,OUTPUT);
+ pinMode(relayPin,OUTPUT);
+ Serial.begin(9600);
+} 
+
+void loop()
+{
+ // variabel data adalah hasil dari pembacaan sensor
+ // berupa logic LOW/HIGH
+ 
+ int analogSensor = analogRead(smokeA0);
+int firevalue = analogRead(pinApi);
+ 
+ Serial.print("asap: ");
+ Serial.println(analogSensor);
+Serial.print("ada api: ");
+Serial.println(firevalue);
+ // jika data pada sensor API bernilai logic LOW
+
+
+ 
+ if (firevalue < 200 )
+ {
+ // alarm dinyalakan
+ digitalWrite(buzzerpin, HIGH);
+ digitalWrite(redLED, HIGH);
+ digitalWrite(greenLED, LOW);
+ digitalWrite(relayPin,LOW);
+ Serial.println("Pompa Air oN");
+ }
+
+
+ else if (analogSensor > sensorThres )
+  {  
+   digitalWrite(redLED, HIGH);
+   tone(buzzerpin, 1000, 500);
+    delay(1000);      
+  }
+ 
+ else 
+ {
+  digitalWrite(buzzerpin, LOW);
+ 
+  digitalWrite(redLED, LOW); 
+  digitalWrite(greenLED, HIGH);
+ 
+ digitalWrite(relayPin,HIGH);
+Serial.println("Pompa Air oFF");
+
+ }
+ 
+
+}
+// Coding Alat Pendeteksi Kebakaran.txt
+//Menampilkan Coding Alat Pendeteksi Kebakaran.txt.
